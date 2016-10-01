@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByName(String name) {
 		User user = new User();
-		user = jdbcTemplate.queryForObject("select * from dogdb.user where name=?", 
+		user = jdbcTemplate.queryForObject("select * from user where name=?", 
 				new UserRowMapper(), 
 				name);
 		return user;
