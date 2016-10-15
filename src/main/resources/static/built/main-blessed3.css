@@ -7808,7 +7808,7 @@ ul.messenger-theme-flat .messenger-spinner {
 .irs-line-right,
 .irs-diapason,
 .irs-slider {
-  background: url("../../public/imgs/common/sprite-skin-flat.png") repeat-x; }
+  background: url("public/imgs/common/sprite-skin-flat.png") repeat-x; }
 
 .irs {
   height: 40px; }
@@ -8555,7 +8555,7 @@ code[class*="language-"] .token.debug, pre[class*="language-"] .token.debug {
 /* Selection Border */
 .jcrop-vline,
 .jcrop-hline {
-  background: #ffffff url("../../public/imgs/common/jcrop/Jcrop.gif");
+  background: #ffffff url("public/imgs/common/jcrop/Jcrop.gif");
   font-size: 0;
   position: absolute; }
 
@@ -8987,12 +8987,12 @@ img.jcrop-preview {
   border-radius: 5px; }
 
 .leaflet-control-layers-toggle {
-  background-image: url("../../public/imgs/common/leaflet/layers.png");
+  background-image: url("public/imgs/common/leaflet/layers.png");
   width: 36px;
   height: 36px; }
 
 .leaflet-retina .leaflet-control-layers-toggle {
-  background-image: url("../../public/imgs/common/leaflet/layers-2x.png");
+  background-image: url("public/imgs/common/leaflet/layers-2x.png");
   background-size: 26px 26px; }
 
 .leaflet-touch .leaflet-control-layers-toggle {

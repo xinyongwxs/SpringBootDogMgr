@@ -3,7 +3,7 @@
 // tag::vars[]
 const React = require('react');
 const ReactDOM = require('react-dom');
-import './../../main.css';
+//import './../../main.css';
 import Datatablesjs from './Datatablesjs';
 
 class App extends React.Component {

@@ -38,6 +38,6 @@
   },
   "scripts": {
     "watch": "webpack --watch -d",
-    "sass": "node-sass --include-path ./node_modules --include-path ./public sass/main.scss src/main.css && blessc -f src/main.css"
+    "sass": "node-sass --include-path ./node_modules --include-path ./public sass/main.scss src/main/resources/static/built/main.css && blessc -f src/main/resources/static/built/main.css"
   }
 }
