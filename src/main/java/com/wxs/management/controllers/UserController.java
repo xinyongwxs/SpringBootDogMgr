@@ -21,7 +21,7 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/index")
 	public String index() {
 		return "index";
 	}

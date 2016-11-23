@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.wxs.management.controllers.BreedingDogController;
+
 @ComponentScan
 @SpringBootApplication
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude=BreedingDogController.class)
 public class DogApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DogApplication.class, args);
