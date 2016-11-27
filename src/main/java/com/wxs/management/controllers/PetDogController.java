@@ -12,22 +12,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wxs.management.models.PetDog;
 import com.wxs.management.services.impl.PetDogServiceImpl;
 
+@Controller
+@RequestMapping(value = "/petdog")
 public class PetDogController {
-	@Controller
-	@RequestMapping(value = "/petdog")
-	public class BreedingDogController {
-		@Autowired
-		public PetDogServiceImpl petDogService;
-		
-		@RequestMapping(method = RequestMethod.GET)
-		public @ResponseBody List<PetDog> getAll() {
-			List<PetDog> wdList = petDogService.getAll();
-			return wdList;
-		}
-		
-		@RequestMapping(method = RequestMethod.POST)
-		public void AddDogs(@RequestBody List<PetDog> dogs) {
-			petDogService.AddDogs(dogs);
-		}
+	@Autowired
+	public PetDogServiceImpl petDogService;
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody List<PetDog> getAll() {
+		List<PetDog> wdList = petDogService.getAll();
+		return wdList;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public void AddDogs(@RequestBody List<PetDog> dogs) {
+		petDogService.AddDogs(dogs);
 	}
 }

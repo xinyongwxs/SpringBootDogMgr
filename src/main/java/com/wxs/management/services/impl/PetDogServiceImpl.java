@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.wxs.management.models.PetDog;
 import com.wxs.management.services.DogService;
 import com.wxs.management.services.rowmappers.PetDogRowMapper;
 
-@Repository
+@Service
 public class PetDogServiceImpl implements DogService<PetDog> {
 
 	@Autowired

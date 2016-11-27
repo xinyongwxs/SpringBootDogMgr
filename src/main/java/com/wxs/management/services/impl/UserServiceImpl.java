@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.wxs.management.models.User;
 import com.wxs.management.services.UserService;
 
-@Repository
+@Service
 public class UserServiceImpl implements UserService {
 	
 	@Autowired

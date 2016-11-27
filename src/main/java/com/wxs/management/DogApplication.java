@@ -9,7 +9,7 @@ import com.wxs.management.controllers.BreedingDogController;
 
 @ComponentScan
 @SpringBootApplication
-@EnableAutoConfiguration(exclude=BreedingDogController.class)
+@EnableAutoConfiguration
 public class DogApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DogApplication.class, args);

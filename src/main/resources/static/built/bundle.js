@@ -82,23 +82,61 @@
 			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
 			_this.state = {
-				selectedKey: 1
+				selectedKey: 1,
+				tableVals: []
 			};
 			return _this;
 		}
 	
 		_createClass(App, [{
 			key: 'componentWillMount',
-			value: function componentWillMount() {}
+			value: function componentWillMount() {
+				var _this2 = this;
+	
+				(0, _client2.default)({ method: 'GET', path: '/workingdog' }).done(function (response) {
+					_this2.setState({
+						selectedKey: 1,
+						tableVals: response.entity
+					});
+				});
+			}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {}
 		}, {
 			key: 'handleSelect',
 			value: function handleSelect(selectedKey) {
-				this.setState({
-					selectedKey: selectedKey
-				});
+				var _this3 = this;
+	
+				if (selectedKey == 1) {
+					(0, _client2.default)({ method: 'GET', path: '/workingdog' }).done(function (response) {
+						_this3.setState({
+							selectedKey: selectedKey,
+							tableVals: response.entity
+						});
+					});
+				} else if (selectedKey == 2) {
+					(0, _client2.default)({ method: 'GET', path: '/breedingdog' }).done(function (response) {
+						_this3.setState({
+							selectedKey: selectedKey,
+							tableVals: response.entity
+						});
+					});
+				} else if (selectedKey == 3) {
+					(0, _client2.default)({ method: "GET", path: "/petdog" }).done(function (response) {
+						_this3.setState({
+							selectedKey: selectedKey,
+							tableVals: response.entity
+						});
+					});
+				} else if (selectedKey == 4) {
+					(0, _client2.default)({ method: "GET", path: "/trainingdog" }).done(function (response) {
+						_this3.setState({
+							selectedKey: selectedKey,
+							tableVals: response.entity
+						});
+					});
+				}
 			}
 		}, {
 			key: 'render',
@@ -130,7 +168,7 @@
 							'\u4EE3\u8BAD\u72AC\u7BA1\u7406'
 						)
 					),
-					React.createElement(_Datatablesjs2.default, { selectedKey: this.state.selectedKey })
+					React.createElement(_Datatablesjs2.default, { selectedKey: this.state.selectedKey, tableVals: this.state.tableVals })
 				);
 	
 				return navInstance;
@@ -57126,7 +57164,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -57162,384 +57200,787 @@
 	//};
 	
 	var DatatableComponent = function (_React$Component) {
-	  _inherits(DatatableComponent, _React$Component);
+			_inherits(DatatableComponent, _React$Component);
 	
-	  function DatatableComponent(props) {
-	    _classCallCheck(this, DatatableComponent);
+			function DatatableComponent(props) {
+					_classCallCheck(this, DatatableComponent);
 	
-	    var _this = _possibleConstructorReturn(this, (DatatableComponent.__proto__ || Object.getPrototypeOf(DatatableComponent)).call(this, props));
+					var _this = _possibleConstructorReturn(this, (DatatableComponent.__proto__ || Object.getPrototypeOf(DatatableComponent)).call(this, props));
 	
-	    _this.state = {
-	      tableVals: []
-	    };
-	    return _this;
-	  }
+					_this.state = {
+							tableVals: []
+					};
+					return _this;
+			}
 	
-	  _createClass(DatatableComponent, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
+			_createClass(DatatableComponent, [{
+					key: 'componentWillMount',
+					value: function componentWillMount() {
+							//		if (this.props.selectedKey == 1) {
+							//			client({method: 'GET', path: '/breedingdog'}).done(response => {
+							//				this.setState({
+							//					tableVals: response.entity
+							//				});
+							//			});
+							//		}
+					}
+			}, {
+					key: 'componentDidMount',
+					value: function componentDidMount() {
+							//	    $(ReactDOM.findDOMNode(this.example))
+							//      .addClass('nowrap')
+							//      .dataTable({
+							//        responsive: true,
+							//        columnDefs: [
+							//          { targets: [-1, -3], className: 'dt-body-right' }
+							//        ]
+							//    });
+					}
+			}, {
+					key: 'render',
+					value: function render() {
+							var _this2 = this;
 	
-	      if (this.props.selectedKey == 1) {
-	        (0, _client2.default)({ method: 'GET', path: '/breedingdog' }).done(function (response) {
-	          _this2.setState({
-	            tableVals: response.entity
-	          });
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      //	    $(ReactDOM.findDOMNode(this.example))
-	      //      .addClass('nowrap')
-	      //      .dataTable({
-	      //        responsive: true,
-	      //        columnDefs: [
-	      //          { targets: [-1, -3], className: 'dt-body-right' }
-	      //        ]
-	      //    });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
+							var rows = [],
+							    header = void 0;
+							var selectedKey = this.props.selectedKey;
+							var tableVals = this.props.tableVals;
 	
-	      var rows = [];
-	      var selectedKey = this.props.selectedKey;
+							if (this.state.tableVals && typeof this.state.tableVals.forEach == "function") {
+									if (selectedKey === 1) {
+											header = _react2.default.createElement(
+													'tr',
+													null,
+													_react2.default.createElement(
+															'th',
+															null,
+															'Name'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Type'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Training Level'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Trainer'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Birthday'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ready For Work'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Price'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Category'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Chip Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ear Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Company Code'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Epdate'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Kennel Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Remarks'
+													)
+											);
 	
-	      if (this.state.tableVals && typeof this.state.tableVals.forEach == "function") {
-	        this.state.tableVals.forEach(function (row, index) {
-	          rows.push(_react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.name
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.birthday
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.kennelId
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.epDate
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.chipId
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.earId
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.companyCode
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.type
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.matingDate
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.puppyBirthday
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.feeder
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.price
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.readyForSell
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.puppyAccount
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.category
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              row.remarks
-	            )
-	          ));
-	        });
-	      }
+											tableVals.forEach(function (row, index) {
+													rows.push(_react2.default.createElement(
+															'tr',
+															null,
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.name
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.type
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.traininglevel
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.trainer
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.birthday
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.readyforworking
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.price
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.category
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.chipid
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.earid
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.companycode
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.epdate
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.kennelid
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.remarks
+															)
+													));
+											});
+									} else if (selectedKey === 2) {
+											header = _react2.default.createElement(
+													'tr',
+													null,
+													_react2.default.createElement(
+															'th',
+															null,
+															'Name'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Birthday'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Kennel Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ep Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Chip Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ear Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Company Code'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Type'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Mating Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Puppy Birthday'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Feeder'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Price'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ready For Sell'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Puppy Account'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Category'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Remarks'
+													)
+											);
 	
-	      return _react2.default.createElement(
-	        _rubix.Table,
-	        { ref: function ref(c) {
-	            return _this3.example = c;
-	          }, className: 'display', cellSpacing: '0', width: '100%' },
-	        _react2.default.createElement(
-	          'thead',
-	          null,
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Name'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Birthday'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Kennel Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ep Date'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Chip Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ear Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Company Code'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Type'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Mating Date'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Puppy Birthday'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Feeder'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Price'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ready For Sell'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Puppy Account'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Category'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Remarks'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'tfoot',
-	          null,
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Name'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Birthday'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Kennel Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ep Date'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Chip Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ear Id'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Company Code'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Type'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Mating Date'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Puppy Birthday'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Feeder'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Price'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Ready For Sell'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Puppy Account'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Category'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Remarks'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'tbody',
-	          null,
-	          rows
-	        )
-	      );
-	    }
-	  }]);
+											tableVals.forEach(function (row, index) {
+													rows.push(_react2.default.createElement(
+															'tr',
+															null,
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.name
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.birthday
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.kennelId
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.epDate
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.chipId
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.earId
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.companyCode
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.type
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.matingDate
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.puppyBirthday
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.feeder
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.price
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.readyForSell
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.puppyAccount
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.category
+															),
+															_react2.default.createElement(
+																	'th',
+																	null,
+																	row.remarks
+															)
+													));
+											});
+									} else if (selectedKey === 3) {
+											header = _react2.default.createElement(
+													'tr',
+													null,
+													_react2.default.createElement(
+															'th',
+															null,
+															'Name'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Type'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Training Level'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Trainer'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Breeder'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Birthday'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Apperance'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ready For Sell'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Price'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ep Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Chip Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ear Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Kennel Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Category'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Company Code'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Remarks'
+													)
+											);
 	
-	  return DatatableComponent;
+											tableVals.forEach(function (row, index) {
+													rows.push(_react2.default.createElement(
+															'tr',
+															null,
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.name
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.type
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.traininglevel
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.trainer
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.breeder
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.birthday
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.apperance
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.readyforsell
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.price
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.epdate
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.chipid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.earid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.kennelid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.category
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.companycode
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.remarks
+															)
+													));
+											});
+									} else if (selectedKey === 4) {
+											header = _react2.default.createElement(
+													'tr',
+													null,
+													_react2.default.createElement(
+															'th',
+															null,
+															'Name'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Owner Phone'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Type'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Gender'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Kennel Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Chip Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ear Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Courses'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Start Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'End Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Company Code'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Owner Id'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Ep Date'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Birthday'
+													),
+													_react2.default.createElement(
+															'th',
+															null,
+															'Remarks'
+													)
+											);
+	
+											tableVals.forEach(function (row, index) {
+													rows.push(_react2.default.createElement(
+															'tr',
+															null,
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.name
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.ownerphone
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.type
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.gender
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.kennelid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.chipid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.earid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.courses
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.startdate
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.enddate
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.companycode
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.ownerid
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.epdate
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.birthday
+															),
+															_react2.default.createElement(
+																	'td',
+																	null,
+																	row.remarks
+															)
+													));
+											});
+									}
+							}
+	
+							return _react2.default.createElement(
+									_rubix.Table,
+									{ ref: function ref(c) {
+													return _this2.example = c;
+											}, className: 'display', cellSpacing: '0', width: '100%' },
+									_react2.default.createElement(
+											'thead',
+											null,
+											header
+									),
+									_react2.default.createElement('tfoot', null),
+									_react2.default.createElement(
+											'tbody',
+											null,
+											rows
+									)
+							);
+					}
+			}]);
+	
+			return DatatableComponent;
 	}(_react2.default.Component);
 	
 	var Datatablesjs = function (_React$Component2) {
-	  _inherits(Datatablesjs, _React$Component2);
+			_inherits(Datatablesjs, _React$Component2);
 	
-	  function Datatablesjs() {
-	    _classCallCheck(this, Datatablesjs);
+			function Datatablesjs() {
+					_classCallCheck(this, Datatablesjs);
 	
-	    return _possibleConstructorReturn(this, (Datatablesjs.__proto__ || Object.getPrototypeOf(Datatablesjs)).apply(this, arguments));
-	  }
+					return _possibleConstructorReturn(this, (Datatablesjs.__proto__ || Object.getPrototypeOf(Datatablesjs)).apply(this, arguments));
+			}
 	
-	  _createClass(Datatablesjs, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _rubix.Row,
-	        null,
-	        _react2.default.createElement(
-	          _rubix.Col,
-	          { xs: 12 },
-	          _react2.default.createElement(
-	            _rubix.PanelContainer,
-	            null,
-	            _react2.default.createElement(
-	              _rubix.Panel,
-	              null,
-	              _react2.default.createElement(
-	                _rubix.PanelBody,
-	                null,
-	                _react2.default.createElement(
-	                  _rubix.Grid,
-	                  null,
-	                  _react2.default.createElement(
-	                    _rubix.Row,
-	                    null,
-	                    _react2.default.createElement(
-	                      _rubix.Col,
-	                      { xs: 12 },
-	                      _react2.default.createElement(DatatableComponent, { selectedKey: this.props.selectedKey }),
-	                      _react2.default.createElement('br', null)
-	                    )
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+			_createClass(Datatablesjs, [{
+					key: 'render',
+					value: function render() {
+							return _react2.default.createElement(
+									_rubix.Row,
+									null,
+									_react2.default.createElement(
+											_rubix.Col,
+											{ xs: 12 },
+											_react2.default.createElement(
+													_rubix.PanelContainer,
+													null,
+													_react2.default.createElement(
+															_rubix.Panel,
+															null,
+															_react2.default.createElement(
+																	_rubix.PanelBody,
+																	null,
+																	_react2.default.createElement(
+																			_rubix.Grid,
+																			null,
+																			_react2.default.createElement(
+																					_rubix.Row,
+																					null,
+																					_react2.default.createElement(
+																							_rubix.Col,
+																							{ xs: 12 },
+																							_react2.default.createElement(DatatableComponent, { selectedKey: this.props.selectedKey, tableVals: this.props.tableVals }),
+																							_react2.default.createElement('br', null)
+																					)
+																			)
+																	)
+															)
+													)
+											)
+									)
+							);
+					}
+			}]);
 	
-	  return Datatablesjs;
+			return Datatablesjs;
 	}(_react2.default.Component);
 	
 	exports.default = Datatablesjs;

@@ -25,6 +25,7 @@
     "bless": "^3.0.3",
     "bless-loader": "^1.0.0",
     "bower": "^1.7.9",
+    "dropzone": "^4.3.0",
     "jquery": "^2.1.4",
     "node-sass": "^3.10.1",
     "react": "^15.3.2",

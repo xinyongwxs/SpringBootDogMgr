@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wxs.management.models.BreedingDog;
+import com.wxs.management.services.DogService;
 import com.wxs.management.services.impl.BreedingDogServiceImpl;
 
 

@@ -8,11 +8,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import com.wxs.management.models.TrainingDog;
 import com.wxs.management.services.DogService;
 import com.wxs.management.services.rowmappers.TrainingDogRowMapper;
 
+@Service
 public class TrainingDogServiceImpl implements DogService<TrainingDog> {
 
 	@Autowired
