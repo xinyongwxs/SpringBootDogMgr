@@ -85,6 +85,8 @@
 				selectedKey: 1,
 				tableVals: []
 			};
+	
+			_this.originalTableVals = [];
 			return _this;
 		}
 	
@@ -94,6 +96,7 @@
 				var _this2 = this;
 	
 				(0, _client2.default)({ method: 'GET', path: '/workingdog' }).done(function (response) {
+					_this2.originalTableVals = response.entity;
 					_this2.setState({
 						selectedKey: 1,
 						tableVals: response.entity
@@ -110,6 +113,7 @@
 	
 				if (selectedKey == 1) {
 					(0, _client2.default)({ method: 'GET', path: '/workingdog' }).done(function (response) {
+						_this3.originalTableVals = response.entity;
 						_this3.setState({
 							selectedKey: selectedKey,
 							tableVals: response.entity
@@ -117,6 +121,7 @@
 					});
 				} else if (selectedKey == 2) {
 					(0, _client2.default)({ method: 'GET', path: '/breedingdog' }).done(function (response) {
+						_this3.originalTableVals = response.entity;
 						_this3.setState({
 							selectedKey: selectedKey,
 							tableVals: response.entity
@@ -124,6 +129,7 @@
 					});
 				} else if (selectedKey == 3) {
 					(0, _client2.default)({ method: "GET", path: "/petdog" }).done(function (response) {
+						_this3.originalTableVals = response.entity;
 						_this3.setState({
 							selectedKey: selectedKey,
 							tableVals: response.entity
@@ -131,6 +137,7 @@
 					});
 				} else if (selectedKey == 4) {
 					(0, _client2.default)({ method: "GET", path: "/trainingdog" }).done(function (response) {
+						_this3.originalTableVals = response.entity;
 						_this3.setState({
 							selectedKey: selectedKey,
 							tableVals: response.entity
@@ -139,11 +146,33 @@
 				}
 			}
 		}, {
+			key: 'handleChange',
+			value: function handleChange(e) {
+				var tableVals = this.originalTableVals;
+				var filteredTable = tableVals.filter(function (item) {
+					for (var col in item) {
+						if (item[col].toString().indexOf(e.target.value) >= 0) {
+							return true;
+						}
+					}
+				});
+	
+				this.setState({
+					selectedKey: this.state.selectedKey,
+					tableVals: filteredTable
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var navInstance = React.createElement(
 					'div',
 					null,
+					React.createElement(
+						'div',
+						null,
+						React.createElement(_rubix.FormControl, { type: 'text', placeholder: 'Search...', onChange: this.handleChange.bind(this), className: 'sidebar-search', style: { border: 'none', background: 'none', margin: '10px 0 0 0', borderBottom: '1px solid #666', color: 'black' } })
+					),
 					React.createElement(
 						_rubix.Nav,
 						{ bsStyle: 'pills', className: 'nav-orange75', activeKey: this.state.selectedKey, onSelect: this.handleSelect.bind(this) },

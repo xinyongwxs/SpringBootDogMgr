@@ -6,7 +6,8 @@ const ReactDOM = require('react-dom');
 import {
 	Nav,
 	NavItem,
-	PageHeader
+	PageHeader,
+	FormControl
 	} from '@sketchpixy/rubix';
 
 import Datatablesjs from './Datatablesjs';
@@ -22,10 +23,13 @@ class App extends React.Component {
 			selectedKey: 1,
 			tableVals: []
 		};
+		
+		this.originalTableVals = [];
 	}
 	
 	componentWillMount() {
 		client({method: 'GET', path: '/workingdog'}).done(response => {
+			this.originalTableVals = response.entity;
 			this.setState({
 				selectedKey: 1,
 				tableVals: response.entity
@@ -40,6 +44,7 @@ class App extends React.Component {
 	handleSelect(selectedKey) {
 		if (selectedKey == 1) {
 			client({method: 'GET', path: '/workingdog'}).done(response => {
+				this.originalTableVals = response.entity;
 				this.setState({
 					selectedKey: selectedKey,
 					tableVals: response.entity
@@ -47,6 +52,7 @@ class App extends React.Component {
 			});
 		} else if (selectedKey == 2) {
 			client({method: 'GET', path: '/breedingdog'}).done(response => {
+				this.originalTableVals = response.entity;
 				this.setState({
 					selectedKey: selectedKey,
 					tableVals: response.entity
@@ -54,6 +60,7 @@ class App extends React.Component {
 			});
 		} else if (selectedKey == 3) {
 			client({method: "GET", path: "/petdog"}).done(response => {
+				this.originalTableVals = response.entity;
 				this.setState({
 					selectedKey: selectedKey,
 					tableVals: response.entity
@@ -61,6 +68,7 @@ class App extends React.Component {
 			});
 		} else if (selectedKey == 4) {
 			client({method: "GET", path: "/trainingdog"}).done(response => {
+				this.originalTableVals = response.entity;
 				this.setState({
 					selectedKey: selectedKey,
 					tableVals: response.entity
@@ -70,9 +78,28 @@ class App extends React.Component {
 
 	}
 
+	handleChange(e) {
+		var tableVals = this.originalTableVals;
+		var filteredTable = tableVals.filter((item) => {
+			for (var col in item) {
+				if (item[col].toString().indexOf(e.target.value) >= 0) {
+					return true;
+				}
+			}
+		});
+
+		this.setState({
+			selectedKey: this.state.selectedKey,
+			tableVals: filteredTable
+		});
+	}
+
 	render() {
 		const navInstance = (
 			<div>
+				<div>
+					<FormControl type='text' placeholder='Search...' onChange={this.handleChange.bind(this)} className='sidebar-search' style={{border: 'none', background: 'none', margin: '10px 0 0 0', borderBottom: '1px solid #666', color: 'black'}} />
+				</div>
 			  <Nav bsStyle="pills" className='nav-orange75' activeKey={this.state.selectedKey} onSelect={this.handleSelect.bind(this)}>
 				<NavItem eventKey={1}>工作犬管理</NavItem>
 				<NavItem eventKey={2}>繁殖犬管理</NavItem>
