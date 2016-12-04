@@ -96,16 +96,15 @@ class App extends React.Component {
 
 	render() {
 		const navInstance = (
-			<div>
-				<div>
-					<FormControl type='text' placeholder='Search...' onChange={this.handleChange.bind(this)} className='sidebar-search' style={{border: 'none', background: 'none', margin: '10px 0 0 0', borderBottom: '1px solid #666', color: 'black'}} />
-				</div>
-			  <Nav bsStyle="pills" className='nav-orange75' activeKey={this.state.selectedKey} onSelect={this.handleSelect.bind(this)}>
-				<NavItem eventKey={1}>工作犬管理</NavItem>
-				<NavItem eventKey={2}>繁殖犬管理</NavItem>
-				<NavItem eventKey={3}>宠物犬管理</NavItem>
-				<NavItem eventKey={4}>代训犬管理</NavItem>
-			  </Nav>
+			<div className='container'>
+				<FormControl type='text' placeholder='Search...' onChange={this.handleChange.bind(this)} className='form-control' />
+
+				<Nav bsStyle="pills" className='nav-orange75' activeKey={this.state.selectedKey} onSelect={this.handleSelect.bind(this)}>
+					<NavItem eventKey={1}>工作犬管理</NavItem>
+					<NavItem eventKey={2}>繁殖犬管理</NavItem>
+					<NavItem eventKey={3}>宠物犬管理</NavItem>
+					<NavItem eventKey={4}>代训犬管理</NavItem>
+				</Nav>
 			  
 			  <Datatablesjs selectedKey={this.state.selectedKey} tableVals={this.state.tableVals}/>
 			 </div>

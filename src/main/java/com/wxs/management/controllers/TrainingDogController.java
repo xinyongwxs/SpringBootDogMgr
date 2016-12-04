@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.wxs.management.models.BreedingDog;
 import com.wxs.management.models.TrainingDog;
 import com.wxs.management.services.DogService;
 import com.wxs.management.services.impl.TrainingDogServiceImpl;
 
-@Controller
+@RestController
 @RequestMapping(value = "/trainingdog")
 public class TrainingDogController {
 	@Autowired

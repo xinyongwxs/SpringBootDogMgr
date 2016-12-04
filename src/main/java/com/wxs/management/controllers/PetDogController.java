@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.wxs.management.models.PetDog;
 import com.wxs.management.services.impl.PetDogServiceImpl;
 
-@Controller
+@RestController
 @RequestMapping(value = "/petdog")
 public class PetDogController {
 	@Autowired
