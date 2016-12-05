@@ -151,7 +151,7 @@
 				var tableVals = this.originalTableVals;
 				var filteredTable = tableVals.filter(function (item) {
 					for (var col in item) {
-						if (item[col].toString().indexOf(e.target.value) >= 0) {
+						if (col !== "id" && item[col].toString().indexOf(e.target.value) >= 0) {
 							return true;
 						}
 					}
@@ -57245,15 +57245,7 @@
 	
 		_createClass(DatatableComponent, [{
 			key: 'componentWillMount',
-			value: function componentWillMount() {
-				//		if (this.props.selectedKey == 1) {
-				//			client({method: 'GET', path: '/breedingdog'}).done(response => {
-				//				this.setState({
-				//					tableVals: response.entity
-				//				});
-				//			});
-				//		}
-			}
+			value: function componentWillMount() {}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
@@ -57995,7 +57987,7 @@
 					),
 					_react2.default.createElement(
 						_rubix.Modal,
-						{ show: this.state.modalModel.showModal },
+						{ show: this.state.modalModel.showModal, onHide: this.handleModalClose.bind(this) },
 						_react2.default.createElement(
 							_rubix.Modal.Header,
 							{ closeButton: true },
@@ -58011,7 +58003,7 @@
 							null,
 							_react2.default.createElement(
 								_rubix.Button,
-								{ onClick: this.handleModalClose },
+								{ onClick: this.handleModalClose.bind(this) },
 								'Close'
 							)
 						)

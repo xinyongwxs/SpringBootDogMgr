@@ -82,7 +82,7 @@ class App extends React.Component {
 		var tableVals = this.originalTableVals;
 		var filteredTable = tableVals.filter((item) => {
 			for (var col in item) {
-				if (item[col].toString().indexOf(e.target.value) >= 0) {
+				if (col !== "id" && item[col].toString().indexOf(e.target.value) >= 0) {
 					return true;
 				}
 			}

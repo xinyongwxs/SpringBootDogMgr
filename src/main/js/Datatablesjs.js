@@ -17,6 +17,7 @@ import {
 } from '@sketchpixy/rubix';
 
 import client from './client';
+import RowEditor from './RowEditor';
 
 //const propTypes = {
 //	selectedKey: React.PropTypes.any
@@ -246,12 +247,12 @@ class DatatableComponent extends React.Component {
 	        </tbody>
 	      </Table>
 
-	      <Modal show={this.state.modalModel.showModal}>
+	      <Modal show={this.state.modalModel.showModal} onHide={this.handleModalClose.bind(this)}>
 	      	  <Modal.Header closeButton>
 	      		<Modal.Title>Modal heading</Modal.Title>
 	      	  </Modal.Header>
 	      	  <Modal.Body>
-
+	      	  	<RowEditor rowValues={this.state.modalModel.modalVals}></RowEditor>
 	      	  </Modal.Body>
 	      	  <Modal.Footer>
 	      		<Button onClick={this.handleModalClose.bind(this)}>Close</Button>
