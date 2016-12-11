@@ -31,8 +31,13 @@ class DatatableComponent extends React.Component {
 			modalModel: {
 				showModal: false,
 				modalVals: {}
-			}
+			},
+			tableVals: {}
 		};
+
+		this.rowEditor = null;
+		this.selectedRowId = "";
+		this.tableVals = [];
 	}
 	
 	componentWillMount() {
@@ -50,23 +55,58 @@ class DatatableComponent extends React.Component {
 //    });
 	}
 
-	handleModalClose() {
-		this.setState({
-			modalModel: {
-				showModal: false,
-				modalVals: {}
+	componentWillReceiveProps(nextProps) {
+		var tableVals = nextProps.tableVals;
+		var curState = Object.assign({}, this.state);
+		curState.tableVals = tableVals;
+		this.setState(curState);
+	}
+
+	handleModalSubmit() {
+		var curState = Object.assign({}, this.state);
+		curState.modalModel.showModal = false;
+		var rowValsState = this.rowEditor.state.rowDataState;
+
+		curState.modalModel.modalVals.headerVals.forEach((val, index) => {
+			curState.modalModel.modalVals.rowVals[index] = rowValsState[val].value;
+		});
+
+		curState.tableVals.some((row, index) => {
+			if (row.id == this.selectedRowId) {
+				for (var head in row) {
+					if (head !== "id") {
+						row[head] = rowValsState[head].value;
+					}
+				}
+				return true;
 			}
 		});
+
+		this.setState(curState);
+	}
+
+	handleModalClose() {
+		var curState = Object.assign({}, this.state);
+		curState.modalModel.showModal = false;
+		this.setState(curState);
 	}
 
 	handleRowClick(e) {
 		var headChildren = e.target.parentElement.parentElement.parentElement.children[0].children[0].childNodes;
 		var curRowChildren = e.target.parentElement.childNodes;
+		this.selectedRowId = e.target.parentElement.getAttribute("data-rowid");
 		var header = [];
 		var row = [];
+		var types = [];
+		var curRowInfo = {
+			headerVals: [],
+			rowVals: [],
+			types: []
+		};
 		if (typeof headChildren == "object") {
 			headChildren.forEach((col, index) => {
-				header.push(col.innerText);
+				header.push(col.getAttribute("data-key"));
+				types.push(col.getAttribute("data-type"));
 			});
 		}
 
@@ -75,10 +115,15 @@ class DatatableComponent extends React.Component {
 				row.push(col.innerText);
 			});
 		}
+
+		curRowInfo.headerVals = header;
+		curRowInfo.rowVals = row;
+		curRowInfo.types = types;
+
 		this.setState({
 			modalModel: {
 				showModal: true,
-				modalVals: {}
+				modalVals: curRowInfo
 			}
 		});
 	}
@@ -86,27 +131,27 @@ class DatatableComponent extends React.Component {
 	render() {
 		let rows = [], header;
 		let selectedKey = this.props.selectedKey;
-		let tableVals = this.props.tableVals;
+		let tableVals = this.state.tableVals;
 		
 		if (tableVals && typeof tableVals.forEach == "function") {
 			if (selectedKey === 1) {
-				header = (<tr><th>Name</th>
-				<th>Type</th>
-				<th>Training Level</th>
-				<th>Trainer</th>
-				<th>Birthday</th>
-				<th>Ready For Work</th>
-				<th>Price</th>
-				<th>Category</th>
-				<th>Chip Id</th>
-				<th>Ear Id</th>
-				<th>Company Code</th>
-				<th>Epdate</th>
-				<th>Kennel Id</th>
-				<th>Remarks</th></tr>);
+				header = (<tr><th data-type="string" data-key="name">Name</th>
+				<th data-type="string" data-key="type">Type</th>
+				<th data-type="enum" data-key="traininglevel">Training Level</th>
+				<th data-type="string" data-key="trainer">Trainer</th>
+				<th data-type="date" data-key="birthday">Birthday</th>
+				<th data-type="enum" data-key="readyforworking">Ready For Work</th>
+				<th data-type="float" data-key="price">Price</th>
+				<th data-type="enum" data-key="category">Category</th>
+				<th data-type="string" data-key="chipid">Chip Id</th>
+				<th data-type="string" data-key="earid">Ear Id</th>
+				<th data-type="string" data-key="companycode">Company Code</th>
+				<th data-type="date" data-key="epdate">Epdate</th>
+				<th data-type="string" data-key="kennelid">Kennel Id</th>
+				<th data-type="string" data-key="remarks">Remarks</th></tr>);
 				
 				tableVals.forEach((row, index) => {
-					rows.push((<tr onClick={this.handleRowClick.bind(this)}><th>{row.name}</th>
+					rows.push((<tr onClick={this.handleRowClick.bind(this)} data-rowid={row.id}><th>{row.name}</th>
 					<th>{row.type}</th>
 					<th>{row.traininglevel}</th>
 					<th>{row.trainer}</th>
@@ -123,25 +168,25 @@ class DatatableComponent extends React.Component {
 					</tr>));
 				});
 			} else if (selectedKey === 2) {
-				header = (<tr><th>Name</th>
-	            <th>Birthday</th>
-	            <th>Kennel Id</th>
-	            <th>Ep Date</th>
-	            <th>Chip Id</th>
-	            <th>Ear Id</th>
-	            <th>Company Code</th>
-	            <th>Type</th>
-	            <th>Mating Date</th>
-	            <th>Puppy Birthday</th>
-	            <th>Feeder</th>
-	            <th>Price</th>
-	            <th>Ready For Sell</th>
-	            <th>Puppy Account</th>
-	            <th>Category</th>
-	            <th>Remarks</th></tr>);
+				header = (<tr><th data-type="string" data-key="name">Name</th>
+	            <th data-type="date" data-key="birthday">Birthday</th>
+	            <th data-type="string" data-key="kennelId">Kennel Id</th>
+	            <th data-type="date" data-key="epDate">Ep Date</th>
+	            <th data-type="string" data-key="chipId">Chip Id</th>
+	            <th data-type="string" data-key="earId">Ear Id</th>
+	            <th data-type="string" data-key="companyCode">Company Code</th>
+	            <th data-type="enum" data-key="type">Type</th>
+	            <th data-type="date" data-key="matingDate">Mating Date</th>
+	            <th data-type="date" data-key="puppyBirthday">Puppy Birthday</th>
+	            <th data-type="string" data-key="feeder">Feeder</th>
+	            <th data-type="float" data-key="price">Price</th>
+	            <th data-type="enum" data-key="readyForSell">Ready For Sell</th>
+	            <th data-type="number" data-key="puppyAccount">Puppy Account</th>
+	            <th data-type="enum" data-key="category">Category</th>
+	            <th data-type="string" data-key="remarks">Remarks</th></tr>);
 
 				tableVals.forEach((row, index) => {
-					rows.push((<tr onClick={this.handleRowClick.bind(this)}>
+					rows.push((<tr data-rowid={row.id} onClick={this.handleRowClick.bind(this)}>
 			        <th>{row.name}</th>
 			        <th>{row.birthday}</th>
 			        <th>{row.kennelId}</th>
@@ -161,26 +206,26 @@ class DatatableComponent extends React.Component {
 			      </tr>));
 				});
 			} else if (selectedKey === 3) {
-				header = (<tr><th>Name</th>
-				<th>Type</th>
-				<th>Training Level</th>
-				<th>Trainer</th>
-				<th>Breeder</th>
-				<th>Birthday</th>
-				<th>Apperance</th>
-				<th>Ready For Sell</th>
-				<th>Price</th>
-				<th>Ep Date</th>
-				<th>Chip Id</th>
-				<th>Ear Id</th>
-				<th>Kennel Id</th>
-				<th>Category</th>
-				<th>Company Code</th>
-				<th>Remarks</th>
+				header = (<tr><th data-type="string" data-key="name">Name</th>
+				<th data-type="enum" data-key="type">Type</th>
+				<th data-type="enum" data-key="traininglevel">Training Level</th>
+				<th data-type="string" data-key="trainer">Trainer</th>
+				<th data-type="string" data-key="breeder">Breeder</th>
+				<th data-type="date" data-key="birthday">Birthday</th>
+				<th data-type="string" data-key="apperance">Apperance</th>
+				<th data-type="enum" data-key="readyforsell">Ready For Sell</th>
+				<th data-type="float" data-key="price">Price</th>
+				<th data-type="date" data-key="epdate">Ep Date</th>
+				<th data-type="string" data-key="chipid">Chip Id</th>
+				<th data-type="string" data-key="earid">Ear Id</th>
+				<th data-type="string" data-key="kennelid">Kennel Id</th>
+				<th data-type="enum" data-key="category">Category</th>
+				<th data-type="string" data-key="companycode">Company Code</th>
+				<th data-type="string" data-key="remarks">Remarks</th>
 				</tr>);
 				
 				tableVals.forEach((row, index) => {
-					rows.push(<tr onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
+					rows.push(<tr data-rowid={row.id} onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
 					<td>{row.type}</td>
 					<td>{row.traininglevel}</td>
 					<td>{row.trainer}</td>
@@ -198,24 +243,24 @@ class DatatableComponent extends React.Component {
 					<td>{row.remarks}</td></tr>);
 				});
 			} else if (selectedKey === 4) {
-				header = (<tr><th>Name</th>
-				<th>Owner Phone</th>
-				<th>Type</th>
-				<th>Gender</th>
-				<th>Kennel Id</th>
-				<th>Chip Id</th>
-				<th>Ear Id</th>
-				<th>Courses</th>
-				<th>Start Date</th>
-				<th>End Date</th>
-				<th>Company Code</th>
-				<th>Owner Id</th>
-				<th>Ep Date</th>
-				<th>Birthday</th>
-				<th>Remarks</th></tr>);
+				header = (<tr><th data-type="string" data-key="name">Name</th>
+				<th data-type="string" data-key="ownerphone">Owner Phone</th>
+				<th data-type="enum" data-key="type">Type</th>
+				<th data-type="enum" data-key="gender">Gender</th>
+				<th data-type="string" data-key="kennelid">Kennel Id</th>
+				<th data-type="string" data-key="chipid">Chip Id</th>
+				<th data-type="string" data-key="earid">Ear Id</th>
+				<th data-type="string" data-key="courses">Courses</th>
+				<th data-type="date" data-key="startdate">Start Date</th>
+				<th data-type="date" data-key="enddate">End Date</th>
+				<th data-type="string" data-key="companycode">Company Code</th>
+				<th data-type="string" data-key="ownerid">Owner Id</th>
+				<th data-type="date" data-key="epdate">Ep Date</th>
+				<th data-type="date" data-key="birthday">Birthday</th>
+				<th data-type="string" data-key="remarks">Remarks</th></tr>);
 				
 				tableVals.forEach((row, index) => {
-					rows.push(<tr onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
+					rows.push(<tr data-rowid={row.id} onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
 					<td>{row.ownerphone}</td>
 					<td>{row.type}</td>
 					<td>{row.gender}</td>
@@ -236,7 +281,7 @@ class DatatableComponent extends React.Component {
 
 	    return (
 	    <div>
-	      <Table ref={(c) => this.example = c} className='display' cellSpacing='0' width='100%'>
+	      <Table className='display' cellSpacing='0' width='100%'>
 	        <thead>
 	            {header}
 	        </thead>
@@ -246,16 +291,18 @@ class DatatableComponent extends React.Component {
 	        	{rows}
 	        </tbody>
 	      </Table>
-
+	      
 	      <Modal show={this.state.modalModel.showModal} onHide={this.handleModalClose.bind(this)}>
 	      	  <Modal.Header closeButton>
 	      		<Modal.Title>Modal heading</Modal.Title>
 	      	  </Modal.Header>
 	      	  <Modal.Body>
-	      	  	<RowEditor rowValues={this.state.modalModel.modalVals}></RowEditor>
+	      	  	<RowEditor ref={(rowEditor) => {
+	      	  		this.rowEditor = rowEditor;
+	      	  	}} rowValues={this.state.modalModel.modalVals}></RowEditor>
 	      	  </Modal.Body>
 	      	  <Modal.Footer>
-	      		<Button onClick={this.handleModalClose.bind(this)}>Close</Button>
+	      		<Button onClick={this.handleModalSubmit.bind(this)}>Submit</Button>
 	      	  </Modal.Footer>
 	      </Modal>
 	    </div>

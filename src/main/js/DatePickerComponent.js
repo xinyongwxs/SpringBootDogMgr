@@ -1,9 +1,10 @@
+import React from 'react';
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
 
 require('react-datepicker/dist/react-datepicker.css');
 
-class DatePicker extends React.Component {
+export default class DatePickerComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -13,7 +14,9 @@ class DatePicker extends React.Component {
 	}
 
 	componentWillMount() {
-
+		this.setState({
+			startDate: moment(this.props.value)
+		});
 	}
 	
 	componentDidMount() {
