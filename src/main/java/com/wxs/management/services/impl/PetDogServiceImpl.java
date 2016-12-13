@@ -64,4 +64,10 @@ public class PetDogServiceImpl implements DogService<PetDog> {
 		
 	}
 
+	@Override
+	public void UpdateDogs(PetDog dogs) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

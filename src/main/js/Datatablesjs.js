@@ -75,6 +75,7 @@ class DatatableComponent extends React.Component {
 			if (row.id == this.selectedRowId) {
 				for (var head in row) {
 					if (head !== "id") {
+						// var rowValsStateKey = head.toLowerCase();
 						row[head] = rowValsState[head].value;
 					}
 				}
@@ -137,33 +138,33 @@ class DatatableComponent extends React.Component {
 			if (selectedKey === 1) {
 				header = (<tr><th data-type="string" data-key="name">Name</th>
 				<th data-type="string" data-key="type">Type</th>
-				<th data-type="enum" data-key="traininglevel">Training Level</th>
+				<th data-type="enum" data-key="trainingLevel">Training Level</th>
 				<th data-type="string" data-key="trainer">Trainer</th>
 				<th data-type="date" data-key="birthday">Birthday</th>
-				<th data-type="enum" data-key="readyforworking">Ready For Work</th>
+				<th data-type="enum" data-key="readyForWorking">Ready For Work</th>
 				<th data-type="float" data-key="price">Price</th>
 				<th data-type="enum" data-key="category">Category</th>
-				<th data-type="string" data-key="chipid">Chip Id</th>
-				<th data-type="string" data-key="earid">Ear Id</th>
-				<th data-type="string" data-key="companycode">Company Code</th>
-				<th data-type="date" data-key="epdate">Epdate</th>
-				<th data-type="string" data-key="kennelid">Kennel Id</th>
+				<th data-type="string" data-key="chipId">Chip Id</th>
+				<th data-type="string" data-key="earId">Ear Id</th>
+				<th data-type="string" data-key="companyCode">Company Code</th>
+				<th data-type="date" data-key="epDate">Epdate</th>
+				<th data-type="string" data-key="kennelId">Kennel Id</th>
 				<th data-type="string" data-key="remarks">Remarks</th></tr>);
 				
 				tableVals.forEach((row, index) => {
 					rows.push((<tr onClick={this.handleRowClick.bind(this)} data-rowid={row.id}><th>{row.name}</th>
 					<th>{row.type}</th>
-					<th>{row.traininglevel}</th>
+					<th>{row.trainingLevel}</th>
 					<th>{row.trainer}</th>
 					<th>{row.birthday}</th>
-					<th>{row.readyforworking}</th>
+					<th>{row.readyForWorking}</th>
 					<th>{row.price}</th>
 					<th>{row.category}</th>
-					<th>{row.chipid}</th>
-					<th>{row.earid}</th>
-					<th>{row.companycode}</th>
-					<th>{row.epdate}</th>
-					<th>{row.kennelid}</th>
+					<th>{row.chipId}</th>
+					<th>{row.earId}</th>
+					<th>{row.companyCode}</th>
+					<th>{row.epDate}</th>
+					<th>{row.kennelId}</th>
 					<th>{row.remarks}</th>
 					</tr>));
 				});
@@ -208,71 +209,71 @@ class DatatableComponent extends React.Component {
 			} else if (selectedKey === 3) {
 				header = (<tr><th data-type="string" data-key="name">Name</th>
 				<th data-type="enum" data-key="type">Type</th>
-				<th data-type="enum" data-key="traininglevel">Training Level</th>
+				<th data-type="enum" data-key="trainingLevel">Training Level</th>
 				<th data-type="string" data-key="trainer">Trainer</th>
 				<th data-type="string" data-key="breeder">Breeder</th>
 				<th data-type="date" data-key="birthday">Birthday</th>
 				<th data-type="string" data-key="apperance">Apperance</th>
-				<th data-type="enum" data-key="readyforsell">Ready For Sell</th>
+				<th data-type="enum" data-key="readyForSell">Ready For Sell</th>
 				<th data-type="float" data-key="price">Price</th>
-				<th data-type="date" data-key="epdate">Ep Date</th>
-				<th data-type="string" data-key="chipid">Chip Id</th>
-				<th data-type="string" data-key="earid">Ear Id</th>
-				<th data-type="string" data-key="kennelid">Kennel Id</th>
+				<th data-type="date" data-key="epDate">Ep Date</th>
+				<th data-type="string" data-key="chipId">Chip Id</th>
+				<th data-type="string" data-key="earId">Ear Id</th>
+				<th data-type="string" data-key="kennelId">Kennel Id</th>
 				<th data-type="enum" data-key="category">Category</th>
-				<th data-type="string" data-key="companycode">Company Code</th>
+				<th data-type="string" data-key="companyCode">Company Code</th>
 				<th data-type="string" data-key="remarks">Remarks</th>
 				</tr>);
 				
 				tableVals.forEach((row, index) => {
 					rows.push(<tr data-rowid={row.id} onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
 					<td>{row.type}</td>
-					<td>{row.traininglevel}</td>
+					<td>{row.trainingLevel}</td>
 					<td>{row.trainer}</td>
 					<td>{row.breeder}</td>
 					<td>{row.birthday}</td>
 					<td>{row.apperance}</td>
-					<td>{row.readyforsell}</td>
+					<td>{row.readyForSell}</td>
 					<td>{row.price}</td>
-					<td>{row.epdate}</td>
-					<td>{row.chipid}</td>
-					<td>{row.earid}</td>
-					<td>{row.kennelid}</td>
+					<td>{row.epDate}</td>
+					<td>{row.chipId}</td>
+					<td>{row.earId}</td>
+					<td>{row.kennelId}</td>
 					<td>{row.category}</td>
-					<td>{row.companycode}</td>
+					<td>{row.companyCode}</td>
 					<td>{row.remarks}</td></tr>);
 				});
 			} else if (selectedKey === 4) {
 				header = (<tr><th data-type="string" data-key="name">Name</th>
-				<th data-type="string" data-key="ownerphone">Owner Phone</th>
+				<th data-type="string" data-key="ownerPhone">Owner Phone</th>
 				<th data-type="enum" data-key="type">Type</th>
 				<th data-type="enum" data-key="gender">Gender</th>
-				<th data-type="string" data-key="kennelid">Kennel Id</th>
-				<th data-type="string" data-key="chipid">Chip Id</th>
-				<th data-type="string" data-key="earid">Ear Id</th>
+				<th data-type="string" data-key="kennelId">Kennel Id</th>
+				<th data-type="string" data-key="chipId">Chip Id</th>
+				<th data-type="string" data-key="earId">Ear Id</th>
 				<th data-type="string" data-key="courses">Courses</th>
-				<th data-type="date" data-key="startdate">Start Date</th>
-				<th data-type="date" data-key="enddate">End Date</th>
-				<th data-type="string" data-key="companycode">Company Code</th>
-				<th data-type="string" data-key="ownerid">Owner Id</th>
-				<th data-type="date" data-key="epdate">Ep Date</th>
+				<th data-type="date" data-key="startDate">Start Date</th>
+				<th data-type="date" data-key="endDate">End Date</th>
+				<th data-type="string" data-key="companyCode">Company Code</th>
+				<th data-type="string" data-key="ownerId">Owner Id</th>
+				<th data-type="date" data-key="epDate">Ep Date</th>
 				<th data-type="date" data-key="birthday">Birthday</th>
 				<th data-type="string" data-key="remarks">Remarks</th></tr>);
 				
 				tableVals.forEach((row, index) => {
 					rows.push(<tr data-rowid={row.id} onClick={this.handleRowClick.bind(this)}><td>{row.name}</td>
-					<td>{row.ownerphone}</td>
+					<td>{row.ownerPhone}</td>
 					<td>{row.type}</td>
 					<td>{row.gender}</td>
-					<td>{row.kennelid}</td>
-					<td>{row.chipid}</td>
-					<td>{row.earid}</td>
+					<td>{row.kennelId}</td>
+					<td>{row.chipId}</td>
+					<td>{row.earId}</td>
 					<td>{row.courses}</td>
-					<td>{row.startdate}</td>
-					<td>{row.enddate}</td>
-					<td>{row.companycode}</td>
-					<td>{row.ownerid}</td>
-					<td>{row.epdate}</td>
+					<td>{row.startDate}</td>
+					<td>{row.endDate}</td>
+					<td>{row.companyCode}</td>
+					<td>{row.ownerId}</td>
+					<td>{row.epDate}</td>
 					<td>{row.birthday}</td>
 					<td>{row.remarks}</td></tr>);
 				});

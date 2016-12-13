@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,16 @@ public class BreedingDogServiceImpl implements DogService<BreedingDog> {
 			}
 			
 		});
+	}
+
+
+	@Override
+	public void UpdateDogs(BreedingDog dogs) {
+		
+		String sql = "update workingdog set trainer=?,price=? where id=?";
+		
+//		jdbcTemplate.update(sql, );
+		
 	}
 
 }

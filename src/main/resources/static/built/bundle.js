@@ -57292,6 +57292,7 @@
 					if (row.id == _this2.selectedRowId) {
 						for (var head in row) {
 							if (head !== "id") {
+								// var rowValsStateKey = head.toLowerCase();
 								row[head] = rowValsState[head].value;
 							}
 						}
@@ -57373,7 +57374,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'traininglevel' },
+								{ 'data-type': 'enum', 'data-key': 'trainingLevel' },
 								'Training Level'
 							),
 							_react2.default.createElement(
@@ -57388,7 +57389,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'readyforworking' },
+								{ 'data-type': 'enum', 'data-key': 'readyForWorking' },
 								'Ready For Work'
 							),
 							_react2.default.createElement(
@@ -57403,27 +57404,27 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'chipid' },
+								{ 'data-type': 'string', 'data-key': 'chipId' },
 								'Chip Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'earid' },
+								{ 'data-type': 'string', 'data-key': 'earId' },
 								'Ear Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'companycode' },
+								{ 'data-type': 'string', 'data-key': 'companyCode' },
 								'Company Code'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'epdate' },
+								{ 'data-type': 'date', 'data-key': 'epDate' },
 								'Epdate'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'kennelid' },
+								{ 'data-type': 'string', 'data-key': 'kennelId' },
 								'Kennel Id'
 							),
 							_react2.default.createElement(
@@ -57450,7 +57451,7 @@
 								_react2.default.createElement(
 									'th',
 									null,
-									row.traininglevel
+									row.trainingLevel
 								),
 								_react2.default.createElement(
 									'th',
@@ -57465,7 +57466,7 @@
 								_react2.default.createElement(
 									'th',
 									null,
-									row.readyforworking
+									row.readyForWorking
 								),
 								_react2.default.createElement(
 									'th',
@@ -57480,27 +57481,27 @@
 								_react2.default.createElement(
 									'th',
 									null,
-									row.chipid
+									row.chipId
 								),
 								_react2.default.createElement(
 									'th',
 									null,
-									row.earid
+									row.earId
 								),
 								_react2.default.createElement(
 									'th',
 									null,
-									row.companycode
+									row.companyCode
 								),
 								_react2.default.createElement(
 									'th',
 									null,
-									row.epdate
+									row.epDate
 								),
 								_react2.default.createElement(
 									'th',
 									null,
-									row.kennelid
+									row.kennelId
 								),
 								_react2.default.createElement(
 									'th',
@@ -57697,7 +57698,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'traininglevel' },
+								{ 'data-type': 'enum', 'data-key': 'trainingLevel' },
 								'Training Level'
 							),
 							_react2.default.createElement(
@@ -57722,7 +57723,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'readyforsell' },
+								{ 'data-type': 'enum', 'data-key': 'readyForSell' },
 								'Ready For Sell'
 							),
 							_react2.default.createElement(
@@ -57732,22 +57733,22 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'epdate' },
+								{ 'data-type': 'date', 'data-key': 'epDate' },
 								'Ep Date'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'chipid' },
+								{ 'data-type': 'string', 'data-key': 'chipId' },
 								'Chip Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'earid' },
+								{ 'data-type': 'string', 'data-key': 'earId' },
 								'Ear Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'kennelid' },
+								{ 'data-type': 'string', 'data-key': 'kennelId' },
 								'Kennel Id'
 							),
 							_react2.default.createElement(
@@ -57757,7 +57758,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'companycode' },
+								{ 'data-type': 'string', 'data-key': 'companyCode' },
 								'Company Code'
 							),
 							_react2.default.createElement(
@@ -57784,7 +57785,7 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.traininglevel
+									row.trainingLevel
 								),
 								_react2.default.createElement(
 									'td',
@@ -57809,7 +57810,7 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.readyforsell
+									row.readyForSell
 								),
 								_react2.default.createElement(
 									'td',
@@ -57819,22 +57820,22 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.epdate
+									row.epDate
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.chipid
+									row.chipId
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.earid
+									row.earId
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.kennelid
+									row.kennelId
 								),
 								_react2.default.createElement(
 									'td',
@@ -57844,7 +57845,7 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.companycode
+									row.companyCode
 								),
 								_react2.default.createElement(
 									'td',
@@ -57864,7 +57865,7 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'ownerphone' },
+								{ 'data-type': 'string', 'data-key': 'ownerPhone' },
 								'Owner Phone'
 							),
 							_react2.default.createElement(
@@ -57879,17 +57880,17 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'kennelid' },
+								{ 'data-type': 'string', 'data-key': 'kennelId' },
 								'Kennel Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'chipid' },
+								{ 'data-type': 'string', 'data-key': 'chipId' },
 								'Chip Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'earid' },
+								{ 'data-type': 'string', 'data-key': 'earId' },
 								'Ear Id'
 							),
 							_react2.default.createElement(
@@ -57899,27 +57900,27 @@
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'startdate' },
+								{ 'data-type': 'date', 'data-key': 'startDate' },
 								'Start Date'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'enddate' },
+								{ 'data-type': 'date', 'data-key': 'endDate' },
 								'End Date'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'companycode' },
+								{ 'data-type': 'string', 'data-key': 'companyCode' },
 								'Company Code'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'ownerid' },
+								{ 'data-type': 'string', 'data-key': 'ownerId' },
 								'Owner Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'epdate' },
+								{ 'data-type': 'date', 'data-key': 'epDate' },
 								'Ep Date'
 							),
 							_react2.default.createElement(
@@ -57946,7 +57947,7 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.ownerphone
+									row.ownerPhone
 								),
 								_react2.default.createElement(
 									'td',
@@ -57961,17 +57962,17 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.kennelid
+									row.kennelId
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.chipid
+									row.chipId
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.earid
+									row.earId
 								),
 								_react2.default.createElement(
 									'td',
@@ -57981,27 +57982,27 @@
 								_react2.default.createElement(
 									'td',
 									null,
-									row.startdate
+									row.startDate
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.enddate
+									row.endDate
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.companycode
+									row.companyCode
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.ownerid
+									row.ownerId
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									row.epdate
+									row.epDate
 								),
 								_react2.default.createElement(
 									'td',
@@ -64714,7 +64715,7 @@
 				var formGroups = [];
 				for (var col in this.state.rowDataState) {
 					var colObj = this.state.rowDataState[col];
-					if (colObj.type === "string" || colObj.type === "float") {
+					if (colObj.type === "string" || colObj.type === "float" || colObj.type === "enum") {
 						formGroups.push(_react2.default.createElement(
 							_rubix.FormGroup,
 							null,
@@ -64742,7 +64743,7 @@
 								showMonthDropdown: true,
 								showYearDropdown: true })
 						));
-					} else if (colObj.type === "enum") {}
+					}
 				}
 	
 				return _react2.default.createElement(

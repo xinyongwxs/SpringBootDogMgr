@@ -59,4 +59,10 @@ public class WorkingDogServiceImpl implements DogService<WorkingDog> {
 			}});
 	}
 
+	@Override
+	public void UpdateDogs(WorkingDog dogs) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

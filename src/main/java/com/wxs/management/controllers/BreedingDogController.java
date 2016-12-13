@@ -34,4 +34,9 @@ public class BreedingDogController {
 		breedingDogService.AddDogs(dogs);
 //		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public void updateDog(@RequestBody BreedingDog dog) {
+		
+	}
 }

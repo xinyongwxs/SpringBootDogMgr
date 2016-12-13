@@ -96,7 +96,7 @@ export default class RowEditor extends React.Component {
 		let formGroups = [];
 		for (var col in this.state.rowDataState) {
 			var colObj = this.state.rowDataState[col];
-			if (colObj.type === "string" || colObj.type === "float") {
+			if (colObj.type === "string" || colObj.type === "float" || colObj.type === "enum") {
 				formGroups.push((<FormGroup>
 						<ControlLabel>{col}</ControlLabel>
 						<FormControl type='text' 
@@ -112,8 +112,6 @@ export default class RowEditor extends React.Component {
 							showMonthDropdown
 							showYearDropdown />
 					</FormGroup>));
-			} else if (colObj.type === "enum") {
-
 			}
 		}
 

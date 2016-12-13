@@ -60,4 +60,10 @@ public class TrainingDogServiceImpl implements DogService<TrainingDog> {
 		
 	}
 
+	@Override
+	public void UpdateDogs(TrainingDog dogs) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
