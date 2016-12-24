@@ -63,27 +63,74 @@ class DatatableComponent extends React.Component {
 	}
 
 	handleModalSubmit() {
+		var pathName = null;
+
+		if (this.props.selectedKey === 1) {
+			pathName = "workingdog";
+		} else if (this.props.selectedKey === 2) {
+			pathName = "breedingdog";
+		} else if (this.props.selectedKey === 3) {
+			pathName = "petdog";
+		} else if (this.props.selectedKey === 4) {
+			pathName = "trainingdog";
+		}
+
 		var curState = Object.assign({}, this.state);
 		curState.modalModel.showModal = false;
 		var rowValsState = this.rowEditor.state.rowDataState;
 
-		curState.modalModel.modalVals.headerVals.forEach((val, index) => {
-			curState.modalModel.modalVals.rowVals[index] = rowValsState[val].value;
-		});
+		if (!curState.modalModel.modalVals.isCreate) {
+			curState.modalModel.modalVals.headerVals.forEach((val, index) => {
+				curState.modalModel.modalVals.rowVals[index] = rowValsState[val].value;
+			});
 
-		curState.tableVals.some((row, index) => {
-			if (row.id == this.selectedRowId) {
-				for (var head in row) {
-					if (head !== "id") {
-						// var rowValsStateKey = head.toLowerCase();
-						row[head] = rowValsState[head].value;
+			var updatedRow = null;
+
+			curState.tableVals.some((row, index) => {
+				if (row.id == this.selectedRowId) {
+					for (var head in row) {
+						if (head !== "id") {
+							// var rowValsStateKey = head.toLowerCase();
+							row[head] = rowValsState[head].value;
+						}
 					}
-				}
-				return true;
-			}
-		});
 
-		this.setState(curState);
+					updatedRow = row;
+
+					return true;
+				}
+			});
+
+			if (updatedRow) {
+				client({
+					method: 'PUT',
+					path: "/" + pathName,
+					entity: updatedRow,
+					headers: {'Content-Type': 'application/json'}
+				}).done(() => {
+					this.setState(curState);
+				});
+			}
+		} else {
+			var newRow = {};
+			for (var key in rowValsState) {
+				newRow[key] = rowValsState[key].value;
+			}
+
+			var addedRowArray = [newRow];
+
+			client({
+				method: 'POST',
+				path: "/" + pathName,
+				entity: addedRowArray,
+				headers: {'Content-Type': 'application/json'}
+			}).done((newId) => {
+				curState.tableVals.push(newRow);
+				this.setState(curState);
+			});
+		}
+
+
 	}
 
 	handleModalClose() {
@@ -102,7 +149,8 @@ class DatatableComponent extends React.Component {
 		var curRowInfo = {
 			headerVals: [],
 			rowVals: [],
-			types: []
+			types: [],
+			isCreate: false
 		};
 		if (typeof headChildren == "object") {
 			headChildren.forEach((col, index) => {
@@ -129,6 +177,38 @@ class DatatableComponent extends React.Component {
 		});
 	}
 
+	handleRowCreate(e) {
+		var curRowInfo = {
+			headerVals: [],
+			rowVals: [],
+			types: [],
+			isCreate: true
+		};
+
+		var currButton = e.target;
+
+		var header = [];
+		var row = [];
+		var types = [];
+
+		var thead = currButton.nextElementSibling.childNodes.item("thead");
+		var headCols = thead.childNodes[0].childNodes;
+		headCols.forEach((col, index) => {
+			header.push(col.getAttribute("data-key"));
+			types.push(col.getAttribute("data-type"));
+		});
+
+		curRowInfo.headerVals = header;
+		curRowInfo.types = types;
+
+		this.setState({
+			modalModel: {
+				showModal: true,
+				modalVals: curRowInfo
+			}
+		});
+	}
+
 	render() {
 		let rows = [], header;
 		let selectedKey = this.props.selectedKey;
@@ -136,20 +216,20 @@ class DatatableComponent extends React.Component {
 		
 		if (tableVals && typeof tableVals.forEach == "function") {
 			if (selectedKey === 1) {
-				header = (<tr><th data-type="string" data-key="name">Name</th>
-				<th data-type="string" data-key="type">Type</th>
-				<th data-type="enum" data-key="trainingLevel">Training Level</th>
-				<th data-type="string" data-key="trainer">Trainer</th>
-				<th data-type="date" data-key="birthday">Birthday</th>
-				<th data-type="enum" data-key="readyForWorking">Ready For Work</th>
-				<th data-type="float" data-key="price">Price</th>
-				<th data-type="enum" data-key="category">Category</th>
-				<th data-type="string" data-key="chipId">Chip Id</th>
-				<th data-type="string" data-key="earId">Ear Id</th>
-				<th data-type="string" data-key="companyCode">Company Code</th>
-				<th data-type="date" data-key="epDate">Epdate</th>
-				<th data-type="string" data-key="kennelId">Kennel Id</th>
-				<th data-type="string" data-key="remarks">Remarks</th></tr>);
+				header = (<tr><th data-type="string" data-key="name" key="name">Name</th>
+				<th data-type="string" data-key="type" key="type">Type</th>
+				<th data-type="enum" data-key="trainingLevel" key="traininglevel">Training Level</th>
+				<th data-type="string" data-key="trainer" key="trainer">Trainer</th>
+				<th data-type="date" data-key="birthday" key="birthday">Birthday</th>
+				<th data-type="enum" data-key="readyForWorking" key="readyForWorking">Ready For Work</th>
+				<th data-type="float" data-key="price" key="price">Price</th>
+				<th data-type="enum" data-key="category" key="category">Category</th>
+				<th data-type="string" data-key="chipId" key="chipid">Chip Id</th>
+				<th data-type="string" data-key="earId" key="earid">Ear Id</th>
+				<th data-type="string" data-key="companyCode" key="companycode">Company Code</th>
+				<th data-type="date" data-key="epDate" key="epdate">Epdate</th>
+				<th data-type="string" data-key="kennelId" key="kennelid">Kennel Id</th>
+				<th data-type="string" data-key="remarks" key="remarks">Remarks</th></tr>);
 				
 				tableVals.forEach((row, index) => {
 					rows.push((<tr onClick={this.handleRowClick.bind(this)} data-rowid={row.id}><th>{row.name}</th>
@@ -282,6 +362,7 @@ class DatatableComponent extends React.Component {
 
 	    return (
 	    <div>
+	    	<Button outlined bsStyle='lightgreen' onClick={this.handleRowCreate.bind(this)}>新建</Button>
 	      <Table className='display' cellSpacing='0' width='100%'>
 	        <thead>
 	            {header}
@@ -314,28 +395,7 @@ class DatatableComponent extends React.Component {
 export default class Datatablesjs extends React.Component {
   render() {
     return (
-		<div>
-			<Row>
-				<Col xs={12}>
-				  <PanelContainer>
-				    <Panel>
-				      <PanelBody>
-				        <Grid>
-				          <Row>
-				            <Col xs={12}>
-				              <DatatableComponent selectedKey={this.props.selectedKey} tableVals={this.props.tableVals} />
-				              <br/>
-				            </Col>
-				          </Row>
-				        </Grid>
-				      </PanelBody>
-				    </Panel>
-				  </PanelContainer>
-				</Col>
-			</Row>
-
-
-	    </div>
+		<DatatableComponent selectedKey={this.props.selectedKey} tableVals={this.props.tableVals} />
     );
   }
 }

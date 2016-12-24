@@ -1,6 +1,8 @@
 package com.wxs.management.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,13 +32,17 @@ public class BreedingDogController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void AddDogs(@RequestBody List<BreedingDog> dogs) {
-		breedingDogService.AddDogs(dogs);
-//		return new ResponseEntity<Void>(HttpStatus.OK);
+	public @ResponseBody String AddDogs(@RequestBody List<BreedingDog> dogs) {
+		UUID id = UUID.randomUUID();
+		if (dogs.size() > 0) {
+			dogs.get(0).setId(id.toString());
+			breedingDogService.AddDogs(dogs);
+		}		
+		return id.toString();
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void updateDog(@RequestBody BreedingDog dog) {
-		
+	public void updateDog(@RequestBody Map<String, Object> dogProps) {
+		breedingDogService.UpdateDogs(dogProps);
 	}
 }

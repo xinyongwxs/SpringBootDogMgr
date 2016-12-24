@@ -3,7 +3,10 @@ package com.wxs.management.services.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -36,7 +39,14 @@ public class WorkingDogServiceImpl implements DogService<WorkingDog> {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				WorkingDog dog = dogs.get(i);
-				ps.setString(1, dog.getId());
+				UUID id = UUID.randomUUID();
+				if (dog.getEpDate() == null) {
+					dog.setEpDate(new Date());
+				}
+				if (dog.getBirthday() == null) {
+					dog.setBirthday(new Date());
+				}
+				ps.setString(1, id.toString());
 				ps.setString(2, dog.getType());
 				ps.setString(3, dog.getName());
 				ps.setInt(4, dog.getTrainingLevel());
@@ -60,8 +70,25 @@ public class WorkingDogServiceImpl implements DogService<WorkingDog> {
 	}
 
 	@Override
-	public void UpdateDogs(WorkingDog dogs) {
-		// TODO Auto-generated method stub
+	public void UpdateDogs(Map<String, Object> dogProps) {
+		String sqlHead = "update workingdog set ";
+		List<String> params = new ArrayList<String>();
+		if (!dogProps.isEmpty()) {
+			for (Map.Entry<String, Object> entry : dogProps.entrySet()) {
+				if (!entry.getKey().equals("id")) {
+					sqlHead = sqlHead.concat(entry.getKey() + "=?,");
+					params.add(entry.getValue().toString());
+				}
+			}
+			
+			sqlHead = sqlHead.substring(0, sqlHead.length() - 1);
+			
+			params.add(dogProps.get("id").toString());
+		}
+		
+		String sql = sqlHead + " where id=?";
+		
+		jdbcTemplate.update(sql, params.toArray());
 		
 	}
 

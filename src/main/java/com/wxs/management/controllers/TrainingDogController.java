@@ -1,6 +1,7 @@
 package com.wxs.management.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,5 +31,10 @@ public class TrainingDogController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void AddDogs(@RequestBody List<TrainingDog> dogs) {
 		trainingDogService.AddDogs(dogs);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public void updateDog(@RequestBody Map<String, Object> dogProps) {
+		trainingDogService.UpdateDogs(dogProps);
 	}
 }

@@ -57280,27 +57280,72 @@
 			value: function handleModalSubmit() {
 				var _this2 = this;
 	
+				var pathName = null;
+	
+				if (this.props.selectedKey === 1) {
+					pathName = "workingdog";
+				} else if (this.props.selectedKey === 2) {
+					pathName = "breedingdog";
+				} else if (this.props.selectedKey === 3) {
+					pathName = "petdog";
+				} else if (this.props.selectedKey === 4) {
+					pathName = "trainingdog";
+				}
+	
 				var curState = Object.assign({}, this.state);
 				curState.modalModel.showModal = false;
 				var rowValsState = this.rowEditor.state.rowDataState;
 	
-				curState.modalModel.modalVals.headerVals.forEach(function (val, index) {
-					curState.modalModel.modalVals.rowVals[index] = rowValsState[val].value;
-				});
+				if (!curState.modalModel.modalVals.isCreate) {
+					curState.modalModel.modalVals.headerVals.forEach(function (val, index) {
+						curState.modalModel.modalVals.rowVals[index] = rowValsState[val].value;
+					});
 	
-				curState.tableVals.some(function (row, index) {
-					if (row.id == _this2.selectedRowId) {
-						for (var head in row) {
-							if (head !== "id") {
-								// var rowValsStateKey = head.toLowerCase();
-								row[head] = rowValsState[head].value;
+					var updatedRow = null;
+	
+					curState.tableVals.some(function (row, index) {
+						if (row.id == _this2.selectedRowId) {
+							for (var head in row) {
+								if (head !== "id") {
+									// var rowValsStateKey = head.toLowerCase();
+									row[head] = rowValsState[head].value;
+								}
 							}
-						}
-						return true;
-					}
-				});
 	
-				this.setState(curState);
+							updatedRow = row;
+	
+							return true;
+						}
+					});
+	
+					if (updatedRow) {
+						(0, _client2.default)({
+							method: 'PUT',
+							path: "/" + pathName,
+							entity: updatedRow,
+							headers: { 'Content-Type': 'application/json' }
+						}).done(function () {
+							_this2.setState(curState);
+						});
+					}
+				} else {
+					var newRow = {};
+					for (var key in rowValsState) {
+						newRow[key] = rowValsState[key].value;
+					}
+	
+					var addedRowArray = [newRow];
+	
+					(0, _client2.default)({
+						method: 'POST',
+						path: "/" + pathName,
+						entity: addedRowArray,
+						headers: { 'Content-Type': 'application/json' }
+					}).done(function (newId) {
+						curState.tableVals.push(newRow);
+						_this2.setState(curState);
+					});
+				}
 			}
 		}, {
 			key: 'handleModalClose',
@@ -57321,7 +57366,8 @@
 				var curRowInfo = {
 					headerVals: [],
 					rowVals: [],
-					types: []
+					types: [],
+					isCreate: false
 				};
 				if ((typeof headChildren === 'undefined' ? 'undefined' : _typeof(headChildren)) == "object") {
 					headChildren.forEach(function (col, index) {
@@ -57348,6 +57394,39 @@
 				});
 			}
 		}, {
+			key: 'handleRowCreate',
+			value: function handleRowCreate(e) {
+				var curRowInfo = {
+					headerVals: [],
+					rowVals: [],
+					types: [],
+					isCreate: true
+				};
+	
+				var currButton = e.target;
+	
+				var header = [];
+				var row = [];
+				var types = [];
+	
+				var thead = currButton.nextElementSibling.childNodes.item("thead");
+				var headCols = thead.childNodes[0].childNodes;
+				headCols.forEach(function (col, index) {
+					header.push(col.getAttribute("data-key"));
+					types.push(col.getAttribute("data-type"));
+				});
+	
+				curRowInfo.headerVals = header;
+				curRowInfo.types = types;
+	
+				this.setState({
+					modalModel: {
+						showModal: true,
+						modalVals: curRowInfo
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var _this3 = this;
@@ -57364,72 +57443,72 @@
 							null,
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'name' },
+								{ 'data-type': 'string', 'data-key': 'name', key: 'name' },
 								'Name'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'type' },
+								{ 'data-type': 'string', 'data-key': 'type', key: 'type' },
 								'Type'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'trainingLevel' },
+								{ 'data-type': 'enum', 'data-key': 'trainingLevel', key: 'traininglevel' },
 								'Training Level'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'trainer' },
+								{ 'data-type': 'string', 'data-key': 'trainer', key: 'trainer' },
 								'Trainer'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'birthday' },
+								{ 'data-type': 'date', 'data-key': 'birthday', key: 'birthday' },
 								'Birthday'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'readyForWorking' },
+								{ 'data-type': 'enum', 'data-key': 'readyForWorking', key: 'readyForWorking' },
 								'Ready For Work'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'float', 'data-key': 'price' },
+								{ 'data-type': 'float', 'data-key': 'price', key: 'price' },
 								'Price'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'enum', 'data-key': 'category' },
+								{ 'data-type': 'enum', 'data-key': 'category', key: 'category' },
 								'Category'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'chipId' },
+								{ 'data-type': 'string', 'data-key': 'chipId', key: 'chipid' },
 								'Chip Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'earId' },
+								{ 'data-type': 'string', 'data-key': 'earId', key: 'earid' },
 								'Ear Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'companyCode' },
+								{ 'data-type': 'string', 'data-key': 'companyCode', key: 'companycode' },
 								'Company Code'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'date', 'data-key': 'epDate' },
+								{ 'data-type': 'date', 'data-key': 'epDate', key: 'epdate' },
 								'Epdate'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'kennelId' },
+								{ 'data-type': 'string', 'data-key': 'kennelId', key: 'kennelid' },
 								'Kennel Id'
 							),
 							_react2.default.createElement(
 								'th',
-								{ 'data-type': 'string', 'data-key': 'remarks' },
+								{ 'data-type': 'string', 'data-key': 'remarks', key: 'remarks' },
 								'Remarks'
 							)
 						);
@@ -58023,6 +58102,11 @@
 					'div',
 					null,
 					_react2.default.createElement(
+						_rubix.Button,
+						{ outlined: true, bsStyle: 'lightgreen', onClick: this.handleRowCreate.bind(this) },
+						'\u65B0\u5EFA'
+					),
+					_react2.default.createElement(
 						_rubix.Table,
 						{ className: 'display', cellSpacing: '0', width: '100%' },
 						_react2.default.createElement(
@@ -58085,44 +58169,7 @@
 		_createClass(Datatablesjs, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						_rubix.Row,
-						null,
-						_react2.default.createElement(
-							_rubix.Col,
-							{ xs: 12 },
-							_react2.default.createElement(
-								_rubix.PanelContainer,
-								null,
-								_react2.default.createElement(
-									_rubix.Panel,
-									null,
-									_react2.default.createElement(
-										_rubix.PanelBody,
-										null,
-										_react2.default.createElement(
-											_rubix.Grid,
-											null,
-											_react2.default.createElement(
-												_rubix.Row,
-												null,
-												_react2.default.createElement(
-													_rubix.Col,
-													{ xs: 12 },
-													_react2.default.createElement(DatatableComponent, { selectedKey: this.props.selectedKey, tableVals: this.props.tableVals }),
-													_react2.default.createElement('br', null)
-												)
-											)
-										)
-									)
-								)
-							)
-						)
-					)
-				);
+				return _react2.default.createElement(DatatableComponent, { selectedKey: this.props.selectedKey, tableVals: this.props.tableVals });
 			}
 		}]);
 	
@@ -59732,7 +59779,12 @@
 	
 	module.exports = rest.wrap(mime, { registry: registry })
 	//		.wrap(uriTemplateInterceptor)
-	.wrap(errorCode).wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' } });
+	.wrap(errorCode).wrap(defaultRequest, {
+			headers: {
+					'Accept': 'application/hal+json;charset=UTF-8',
+					'ContentType': 'application/json;charset=UTF-8'
+			}
+	});
 
 /***/ },
 /* 652 */
@@ -64668,6 +64720,7 @@
 				var header = modalVals.headerVals;
 				var row = modalVals.rowVals;
 				var types = modalVals.types;
+				this.isCreate = modalVals.isCreate;
 				var rowDataState = {};
 				if (header && header.forEach) {
 					header.forEach(function (hVal, index) {

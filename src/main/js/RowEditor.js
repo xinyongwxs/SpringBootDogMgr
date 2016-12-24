@@ -50,6 +50,7 @@ export default class RowEditor extends React.Component {
 		let header = modalVals.headerVals;
 		let row = modalVals.rowVals;
 		let types = modalVals.types;
+		this.isCreate = modalVals.isCreate;
 		let rowDataState = {};
 		if (header && header.forEach) {
 			header.forEach((hVal, index) => {
